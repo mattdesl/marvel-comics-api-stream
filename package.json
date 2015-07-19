@@ -1,0 +1,42 @@
+{
+  "name": "marvel-comics-api-stream",
+  "version": "1.0.0",
+  "description": "streams Marvel API data",
+  "main": "index.js",
+  "license": "MIT",
+  "author": {
+    "name": "Matt DesLauriers",
+    "email": "dave.des@gmail.com",
+    "url": "https://github.com/mattdesl"
+  },
+  "dependencies": {
+    "marvel-comics-api": "^1.1.0",
+    "through2": "^2.0.0"
+  },
+  "devDependencies": {
+    "faucet": "0.0.1",
+    "tape": "^4.0.0"
+  },
+  "scripts": {
+    "test": "node test.js | faucet"
+  },
+  "keywords": [
+    "marvel",
+    "api",
+    "stream",
+    "comic",
+    "comics",
+    "character",
+    "super",
+    "hero",
+    "heroes"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mattdesl/marvel-comics-api-stream.git"
+  },
+  "homepage": "https://github.com/mattdesl/marvel-comics-api-stream",
+  "bugs": {
+    "url": "https://github.com/mattdesl/marvel-comics-api-stream/issues"
+  }
+}
