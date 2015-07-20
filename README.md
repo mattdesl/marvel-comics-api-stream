@@ -22,6 +22,8 @@ marvel('comics', {
   publicKey: conf.publicKey,
   privateKey: conf.privateKey,
   pages: 3
+}).on('info', function (ev) {
+  console.log('%s\n', ev.attributionText)
 }).on('data', function (comic) {
   console.log(comic.title)
 }).on('end', function () {
@@ -32,6 +34,8 @@ marvel('comics', {
 Result:
 
 ```
+Data provided by Marvel. © 2015 MARVEL
+
 Ant-Man: So (Trade Paperback)
 Uncanny X-Men (2013) #600
 Brilliant (2011) #6
@@ -68,6 +72,38 @@ Options:
 The other options are passed to [marvel-comics-api](https://github.com/mattdesl/marvel-comics-api), like `query` and `timeout`. 
 
 Once all data has been streamed, or once we've hit our desired number of pages, emits an `end` event.
+
+### events
+
+#### `stream.on('info', fn)`
+
+Triggered once before any other events, providing the following:
+
+```js
+{
+  copyright: String,       // copyright detail
+  attributionText: String, // attribution detail
+  attributionHTML: String, // attribution detail
+}
+```
+
+#### `stream.on('page', fn)`
+
+Emits `'page'` for each request.
+
+```js
+{
+  page: Number,   // current page index
+  offset: Number, // current offset index into the results
+  limit: Number,  // the resulting limit for this page
+  count: Number,  // the number of results in this page
+  total: Number   // total number of results across all pages
+}
+```
+
+#### `stream.on('data', fn)`
+
+After `'page'` is emitted, that page will emit a `'data'` event for each of its entity results (e.g. a comic book or character). See [Entity Types](http://developer.marvel.com/documentation/entity_types) for details on their structure.
 
 ## running tests
 
