@@ -10,12 +10,16 @@ test('streams Marvel API data', function (t) {
     privateKey: conf.privateKey,
     pages: 2,
     query: {
-      limit: 5
+      limit: 5,
     }
-  }).on('info', function (ev) {
+  })
+  
+  stream.on('info', function (ev) {
     console.log('%s\n', ev.attributionText)
     t.equal(typeof ev.copyright, 'string', 'has copyright')
-  }).once('page', function (ev) {
+  })
+  
+  stream.once('page', function (ev) {
     t.equal(characters.length, 0, 'no characters pushed yet')
     t.ok(ev.total > 100, 'has some length')
     t.equal(ev.count, 5, 'got 5 for a page')
@@ -26,9 +30,17 @@ test('streams Marvel API data', function (t) {
     stream.once('page', function (ev) {
       t.equal(ev.page, 1, 'next page')
     })
-  }).on('data', function (character) {
+  })
+  
+  stream.on('error', function (err) {
+    t.fail(err.message)
+  })
+  
+  stream.on('data', function (character) {
     characters.push(character)
-  }).on('end', function () {
+  })
+  
+  stream.on('end', function () {
     t.equal(characters.length, 10, 'streamed in 2 pages')
     t.equal(typeof characters[0].name, 'string', 'got character data')
   })

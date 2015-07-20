@@ -89,7 +89,7 @@ Triggered once before any other events, providing the following:
 
 #### `stream.on('page', fn)`
 
-Emits `'page'` for each request.
+The stream emits a `'page'` for each request.
 
 ```js
 {
@@ -104,6 +104,10 @@ Emits `'page'` for each request.
 #### `stream.on('data', fn)`
 
 After `'page'` is emitted, that page will emit a `'data'` event for each of its entity results (e.g. a comic book or character). See [Entity Types](http://developer.marvel.com/documentation/entity_types) for details on their structure.
+
+#### `stream.on('error', fn)`
+
+The stream emits a `'error'` event if one of the requests failed; e.g. incorrect API key, server timeout, or an invalid referrer.
 
 ## running tests
 

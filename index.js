@@ -20,14 +20,14 @@ function marvelApiStream (api, opt) {
   return stream
 
   function next () {
-    marvelApi(api, opt, function (err, body) {
+    marvelApi(api, opt, function (err, body, resp) {
+      var errMessage = body ? (body.status || body.message) : ''
       if (err) {
+        if (errMessage) { 
+          // if the API provides a message, use it instead
+          err = new Error('GET statusCode ' + resp.statusCode + ': ' + errMessage)
+        }
         return stream.emit('error', err)
-      }
-      if (!(/^2/.test(body.code))) {
-        return stream.emit('error', new Error(
-          'Error Code: ' + body.code + ', status: ' + body.status
-        ))
       }
 
       var data = body.data
